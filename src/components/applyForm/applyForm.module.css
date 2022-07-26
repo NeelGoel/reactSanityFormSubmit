@@ -1,0 +1,30 @@
+.container {
+    width: 100%;
+    height: 100vh;
+    background-color: #39dbad;
+}
+
+.submitHead {
+    font-size: 2rem;
+    font-weight: 600;
+    color: white;
+    padding: 5px;
+    box-shadow: 5px 10px #2f6666;
+    background-color: #00000061;
+}
+
+.appBtn {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: white;
+    background-color: #2f6666;
+}
+
+.googlecontainer {
+    background-image: url('../../assets/images/world.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 45%;
+    position: relative;
+}
