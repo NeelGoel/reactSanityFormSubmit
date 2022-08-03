@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import style from './applyForm.module.css';
+import sanityClient from "../../client";
 
 const projectId = 'mnr9tu3f';
 const datasetName = 'production';
@@ -28,11 +29,52 @@ const ApplyForm  = (props) => {
           })
             .then(response => response.json())
             .then((result) => {
-                changeForm({name:'',email:'', number: '', description:''});
-                changeDisabled(false);
-                console.log(result)
+                fetchMailType();
             })
             .catch(error => console.error(error))
+    }
+
+    const fetchMailType = () => {
+        var emailData = {};
+        sanityClient.fetch(
+            `
+            *[_type == 'emailTemplate' && type == 'Query']{
+                from,
+                subject,
+                password,
+                body
+              }
+           `)
+        .then((data) => {
+            emailData = {
+                to: form.email,
+                name: form.name,
+                desc: form.description,
+                from: data[0].from,
+                subject: data[0].subject,
+                body: data[0].body,
+                password: data[0].password
+            }
+            sendEmail({...emailData});
+        })
+        .catch(console.error);
+    }
+
+    const sendEmail = (emai) => {
+        fetch('https://react-sanity-form-submit-server.vercel.app/sendemail',{
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(emai)
+        })
+        .then(result => result.json())
+        .then(data => {
+            console.log(`email has been sent to ${data.name}`);
+            changeDisabled(false);
+            changeForm({name:'',email:'', number: '', description:''});
+        })
+        .catch((error) => {
+            console.error(error);
+          });
     }
 
     return(
@@ -54,7 +96,7 @@ const ApplyForm  = (props) => {
                 <div className='width-100 mg-tp1'>
                     <button onClick={submitFormData} disabled={disabled} className={`${style.appBtn} width-100 paddinghalf flex gap justify_center align_center`}>
                         Apply
-                        { disabled && <div class="loader"></div>}
+                        { disabled && <div className="loader"></div>}
                     </button>
                 </div>
             </div>
