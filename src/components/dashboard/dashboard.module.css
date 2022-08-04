@@ -47,3 +47,25 @@
 .arrow {
     width: 1.5rem;
 }
+
+@media screen and (max-width: 700px) {
+
+    .lineh {
+        margin-top: 12rem;
+        line-height: 3rem;
+        text-align: center;
+    }
+
+    .headText {
+        font-size: 3rem;
+    }
+
+    .future {
+        font-size: 3rem;
+    }
+
+    .applybtn {
+        width: 10rem;
+        margin-left: 5rem;
+    }
+}
