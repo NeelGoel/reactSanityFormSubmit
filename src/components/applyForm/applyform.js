@@ -61,7 +61,7 @@ const ApplyForm  = (props) => {
     }
 
     const sendEmail = (emai) => {
-        fetch('http://localhost:8080/sendemail',{
+        fetch('https://react-sanity-form-submit-server.vercel.app/sendemail',{
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(emai)
